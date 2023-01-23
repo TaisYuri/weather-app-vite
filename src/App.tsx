@@ -5,19 +5,33 @@ import { WeatherProps } from "./types/weatherProps";
 import { NextDays, NextDaysProps } from "./components/NextDays/NextDays";
 import { InputSearch } from "./components/InputSearch/InputSearch";
 import { RandomLocation } from "./components/RandomLocation";
-
+import { useState, useEffect } from "react";
+import { handleTime } from "./functions/handleTime";
+import {citys} from './mock/citys'
+import {getRandomLocations} from './functions/getRandomLocations'
+import backgroundWeather from "./assets/img-weather.jpg";
+import { getLocationFor5days, getLocationFor5daysProps } from "./functions/getLocationFor5days";
 
 function App() {
   const [data, setData] = useState<WeatherProps>({} as WeatherProps);
   const [location, setLocation] = useState("");
   const [dataRandom, setDataRandom] = useState<string[]>([]);
-
+  const [dataDays, setDataDays] = useState<getLocationFor5daysProps[]>([]);
 
 
   useEffect(() => {
-    array.forEach((item) => locations(item));
+    citys.forEach((item) => getRandomLocations(item, setDataRandom));
   }, []);
 
+  useEffect(() => {
+    if (Object.keys(data).length !== 0) {
+      getLocationFor5days(data.coord.lat, data.coord.lon, setDataDays);
+
+      setTimeout(() => {
+        NextDaysProps(dataDays);
+      }, 5000);
+    }
+  }, [data]);
 
   return (
     <div
@@ -51,7 +65,7 @@ function App() {
             {data.dt && (
               <div>
                 <p className="px-10 font-sans font-nunito text-4xl	text-white mb-1">
-                  {handleTime(data.dt).convertDateWithHour}
+                  {handleTime(data.dt, 'long').convertDateWithHour}
                 </p>
                 <p className="px-10 font-sans font-nunito text-4xl	text-white mb-4">
                   {handleTime(data.dt, 'long').week}
