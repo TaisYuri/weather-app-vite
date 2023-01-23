@@ -9,9 +9,32 @@ export interface getLocationFor5daysProps {
     temp_min: number;
     humidity: number;
   };
-  weather: {
-    main: string;
-  }
+ 
+}
+export interface ItemgetLocationFor5daysProps {
+  date: {
+    dt: number;
+    dt_txt: string;
+    main: {
+      temp_max: number;
+      temp_min: number;
+      humidity: number;
+      temp: number;
+    };
+    weather: [
+      {
+        main:
+          | "Thunderstorm"
+          | "Drizzle"
+          | "Rain"
+          | "Snow"
+          | "Clouds"
+          | "Haze"
+          | "Smoke"
+          | "Clear";
+      }
+    ];
+  };
 }
 
 export async function getLocationFor5days(

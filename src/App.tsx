@@ -109,7 +109,7 @@ function App() {
         <>{RandomLocation(dataRandom)}</>
       )}
 
-      {data.name && <NextDays />}
+      {/* {data.name && <NextDays />} */}
       {NextDaysProps(dataDays)}
     </div>
   );
